@@ -1,3 +1,15 @@
+from pkg_resources import compatible_platforms
+
+"""
+Nombre: Sofía Torres Ramírez.
+ Código: 202014872
+
+ Nombre: Juan Camilo Neira Campos
+ Código: 201922746
+
+ Nombre: Juan David Briceño Morales
+ Código: 201812887
+ """
 
 import math
 import sys
@@ -5,41 +17,44 @@ def count(a, b):
     m = len(a)
     n = len(b)
  
-    # Create a table to store results of sub-problems
+    # Crea una tabla para guardar los resultados de los subproblemas
     lookup = [[0] * (n + 1) for i in range(m + 1)]
  
-    # If first string is empty
+    # Si la primer cadena está vacia
     for i in range(n+1):
         lookup[0][i] = 0
  
-    # If second string is empty
+    # Si la segunda cadena está vacia 
     for i in range(m + 1):
         lookup[i][0] = 1
  
-    # Fill lookup[][] in bottom up manner
+    # Rellenar la busqueda de manera ascendente
     for i in range(1, m + 1):
         for j in range(1, n + 1):
              
-            # If last characters are same, 
-            # we have two options -
-            # 1. consider last characters of 
-            # both strings in solution
-            # 2. ignore last character of first string
+            # Si los ultimos caracteres son iguales,  
+            # Hay dos opciones
+            # 1. considerar los últimos caracteres de ambas cadenas en la solución
+            # 2. ignorar el ultimo caracter de la primer cadena
             if a[i - 1] == b[j - 1]:
                 lookup[i][j] = lookup[i - 1][j - 1] + lookup[i - 1][j]
                  
             else:
-                # If last character are different, ignore
-                # last character of first string
+                # Si el ultimo caracter es diferente, ignorarlo
+                # el ultimo caracter de la cadena
                 lookup[i][j] = lookup[i - 1][j]
  
     return lookup[m][n]
 
 
 
+<<<<<<< HEAD
 
 
 
+=======
+#Funcion grande
+>>>>>>> c171cc8105edeadbc71235665ee3e6416de9fda7
 def find_secuence(x,y,m):
     m=int(m)
     x_list = list(x.strip(" "))
@@ -54,7 +69,6 @@ def find_secuence(x,y,m):
     return cantidad_subsecuencias
 
         
-
 
 #Funcion recursuva, cambia la letra
 def changing (primeramitad, segundamitad, y_first, y_second,m):
@@ -108,10 +122,8 @@ def changing (primeramitad, segundamitad, y_first, y_second,m):
         changing(primeramitad, segundamitad, y_first, y_second,m)
 
     return primeramitad+segundamitad
-
-
     
-    
+
 
 #funcion que busca el indice de la letra a cambiar
 def to_change (lista, letra_principal, letra_otra, cadena):
@@ -160,4 +172,3 @@ if __name__ == '__main__':
         m = int(m)
         cantidad_subsecuencias = find_secuence(x,y,m)
         print(cantidad_subsecuencias)
-    

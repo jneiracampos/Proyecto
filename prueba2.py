@@ -56,7 +56,7 @@ def change(string1, string2, n):
     newSequence = listToString(listSequence)
     maxRepeticiones = count(string1, newSequence)
 
-    return newSequence
+    return maxRepeticiones
 
 
 if __name__ == '__main__':
