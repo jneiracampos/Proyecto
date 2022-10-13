@@ -1,29 +1,40 @@
 
 import math
 import sys
-# Funcio para contar la cantiad de veces que se repite la subsecuencia en la secuencia
-def count(X, Y, m, n):
+def count(a, b):
+    m = len(a)
+    n = len(b)
  
-    # caso base 1: si solo un carcater falta
-    if m == 1 and n == 1:
-        return 1 if (X[0] == Y[0]) else 0
+    # Create a table to store results of sub-problems
+    lookup = [[0] * (n + 1) for i in range(m + 1)]
  
-    # caso base 2: Si ya se recorrio toda la secuencia X
-    if m == 0:
-        return 0
+    # If first string is empty
+    for i in range(n+1):
+        lookup[0][i] = 0
  
-    # Caso base 3: Si ya se recorrió toda la subsecucnia Y, se encontró la subsecuencia
-    if n == 0:
-        return 1
+    # If second string is empty
+    for i in range(m + 1):
+        lookup[i][0] = 1
  
-    #Si la longitud de la subsecuencia es mayor a la secuencia, no se puede encontrar
-    if n > m:
-        return 0
+    # Fill lookup[][] in bottom up manner
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+             
+            # If last characters are same, 
+            # we have two options -
+            # 1. consider last characters of 
+            # both strings in solution
+            # 2. ignore last character of first string
+            if a[i - 1] == b[j - 1]:
+                lookup[i][j] = lookup[i - 1][j - 1] + lookup[i - 1][j]
+                 
+            else:
+                # If last character are different, ignore
+                # last character of first string
+                lookup[i][j] = lookup[i - 1][j]
  
-    # Si el ultimo caracter de la secuencia es igual al ultimo de la subsecuencia, se puede encontrar
-    return (count(X, Y, m - 1, n - 1) if X[m - 1] == Y[n - 1] else 0)\
-        + count(X, Y, m - 1, n)
- 
+    return lookup[m][n]
+
 
 
 
@@ -39,7 +50,7 @@ def find_secuence(x,y,m):
     y_second = y_list[1]
     lista_correcta = changing (primeramitad, segundamitad, y_first, y_second,m)
     string_correcto = "".join(lista_correcta)
-    cantidad_subsecuencias = count(string_correcto,y,len(string_correcto),len(y))
+    cantidad_subsecuencias = count(string_correcto,y)
     return cantidad_subsecuencias
 
         
@@ -112,7 +123,7 @@ def to_change (lista, letra_principal, letra_otra, cadena):
             #Busco una letra que no sea ni x ni t
             for i in lista:
                 #excepto si es la primera
-                if lista.index(i)==0 and i == letra_otra:
+                if lista.index(i) == 0 and i == letra_otra and letra_otra != letra_principal:
                     return lista.index(i)
                 if i != letra_principal and i != letra_otra:
                     return lista.index(i)
@@ -128,7 +139,7 @@ def to_change (lista, letra_principal, letra_otra, cadena):
             #Busco una letra que no sea ni x ni t
             while i >= 0:
                 #excepto si es la útima
-                if i == len(lista)-1 and i == letra_otra:
+                if i == len(lista)-1 and lista[i] == letra_otra and letra_otra != letra_principal:
                     return i
                 if lista[i] != letra_principal and lista[i] != letra_otra:
                     return i
