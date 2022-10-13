@@ -1,26 +1,26 @@
 
 import math
-# Function to count the number of times pattern `Y[0…n)`
-# appears in a given string `X[0…m)` as a subsequence
+import sys
+# Funcio para contar la cantiad de veces que se repite la subsecuencia en la secuencia
 def count(X, Y, m, n):
  
-    # Base case 1: if only one character is left
+    # caso base 1: si solo un carcater falta
     if m == 1 and n == 1:
         return 1 if (X[0] == Y[0]) else 0
  
-    # Base case 2: if the input string `X` reaches its end
+    # caso base 2: Si ya se recorrio toda la secuencia X
     if m == 0:
         return 0
  
-    # Base case 3: if pattern `Y` reaches its end, we have found subsequence
+    # Caso base 3: Si ya se recorrió toda la subsecucnia Y, se encontró la subsecuencia
     if n == 0:
         return 1
  
-    # Optimization: the solution is not possible if the number of characters
-    # in the string is less than the number of characters in the pattern
+    #Si la longitud de la subsecuencia es mayor a la secuencia, no se puede encontrar
     if n > m:
         return 0
  
+    # Si el ultimo caracter de la secuencia es igual al ultimo de la subsecuencia, se puede encontrar
     return (count(X, Y, m - 1, n - 1) if X[m - 1] == Y[n - 1] else 0)\
         + count(X, Y, m - 1, n)
  
@@ -39,9 +39,8 @@ def find_secuence(x,y,m):
     y_second = y_list[1]
     lista_correcta = changing (primeramitad, segundamitad, y_first, y_second,m)
     string_correcto = "".join(lista_correcta)
-    #return string_correcto
     cantidad_subsecuencias = count(string_correcto,y,len(string_correcto),len(y))
-    return cantidad_subsecuencias, string_correcto
+    return cantidad_subsecuencias
 
         
 
@@ -52,7 +51,7 @@ def changing (primeramitad, segundamitad, y_first, y_second,m):
     rep_second = segundamitad.count(y_second)
     if m <= 0:
         return primeramitad+segundamitad
-    elif primeramitad.count ( y_first ) == len ( primeramitad ) and segundamitad.count ( y_second ) == len ( segundamitad ):
+    elif rep_first == len ( primeramitad ) and rep_second == len ( segundamitad ):
         return primeramitad+segundamitad 
     #Si el numero de x es igual al numero de t y no está perfecto (xxatta)
     if rep_first == rep_second and rep_first <  len(primeramitad):
@@ -144,7 +143,10 @@ def to_change (lista, letra_principal, letra_otra, cadena):
 
 
 if __name__ == '__main__':
-    string1 = input("Ingrese la secuencia: ")
-    string2 = input("Ingrese la subsecuencia: ")
-    m = input("Ingrese la cantidad de cambios: ")
-    print(find_secuence(string1, string2, m))
+    numero_casos = int(sys.stdin.readline())
+    for i in range(numero_casos):
+        x, y, m = sys.stdin.readline().split()
+        m = int(m)
+        cantidad_subsecuencias = find_secuence(x,y,m)
+        print(cantidad_subsecuencias)
+    
