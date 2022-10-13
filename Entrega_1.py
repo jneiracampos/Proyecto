@@ -39,7 +39,7 @@ def count(a, b):
 
 
 
-#Funcion grande
+
 def find_secuence(x,y,m):
     m=int(m)
     x_list = list(x.strip(" "))
